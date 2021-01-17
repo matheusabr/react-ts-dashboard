@@ -19,14 +19,18 @@ const PrivateRoute: React.FC<Props> = ({ component: Component, ...rest }) => {
         render={(props) => {
           return (
             <div>
+              {/* Main Header */}
               <Header />
+              {/* Content */}
               <div
                 style={{
                   display: "flex",
                   height: "100vw",
                 }}
               >
-                <MenuDrawer activePageId={1} />
+                {/* Sidemenu */}
+                <MenuDrawer />
+                {/* Private Pages */}
                 <div style={{ flexGrow: 1 }}>
                   <Component {...props} />
                 </div>
