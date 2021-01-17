@@ -1,4 +1,5 @@
 import React from "react";
+import { COLORS } from "../styles/colors";
 
 interface MenuItem {
   id: number;
@@ -25,13 +26,26 @@ const MENU_LIST: Array<MenuItem> = [
 interface Props {
   activePageId: number;
 }
+
 const MenuDrawer: React.FC<Props> = ({ activePageId }) => {
   return (
-    <ul>
-      {MENU_LIST.map((item) => (
-        <li key={item.id}>{item.label}</li>
-      ))}
-    </ul>
+    <div style={{ backgroundColor: COLORS.grey.darker }}>
+      <ul style={{ margin: 0, padding: 10, listStyleType: "none" }}>
+        {MENU_LIST.map((item) => (
+          <li
+            key={item.id}
+            style={{
+              fontSize: 14,
+              paddingBottom: 10,
+              color:
+                item.id === activePageId ? COLORS.primary : COLORS.secondary,
+            }}
+          >
+            {item.label}
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 };
 
