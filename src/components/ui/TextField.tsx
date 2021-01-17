@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 
 type LabelVariant = "inline" | "vertical";
 type InputVariant = "standard" | "filled" | "outline";
@@ -19,6 +19,8 @@ const TextField: React.FC<Props> = ({
   placeholder,
   handleChange,
 }) => {
+  const inputRef = useRef(null);
+
   return (
     <div
       style={{
@@ -27,7 +29,12 @@ const TextField: React.FC<Props> = ({
       }}
     >
       <span style={{ alignSelf: "flex-start" }}>{label}</span>
-      <input type={type} placeholder={placeholder} onChange={handleChange} />
+      <input
+        ref={inputRef}
+        type={type}
+        placeholder={placeholder}
+        onChange={handleChange}
+      />
     </div>
   );
 };
