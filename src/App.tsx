@@ -11,10 +11,19 @@ function App() {
   return (
     <div className="App">
       <Header />
-      <MenuDrawer activePageId={1} />
-      <LoginPage />
-      <DashboardPage />
-      <SettingsPage />
+      <div
+        style={{
+          display: "flex",
+          height: "100vw",
+        }}
+      >
+        <MenuDrawer activePageId={1} />
+        <div style={{ flexGrow: 1 }}>
+          <DashboardPage />
+        </div>
+      </div>
+      {/* <LoginPage />
+      <SettingsPage /> */}
     </div>
   );
 }

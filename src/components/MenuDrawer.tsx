@@ -29,7 +29,12 @@ interface Props {
 
 const MenuDrawer: React.FC<Props> = ({ activePageId }) => {
   return (
-    <div style={{ backgroundColor: COLORS.grey.darker }}>
+    <div
+      style={{
+        backgroundColor: COLORS.grey.darker,
+        width: 160,
+      }}
+    >
       <ul style={{ margin: 0, padding: 10, listStyleType: "none" }}>
         {MENU_LIST.map((item) => (
           <li
