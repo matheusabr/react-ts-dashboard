@@ -43,9 +43,8 @@ const MenuDrawer: React.FC = () => {
       <ul style={{ margin: 0, padding: 10, listStyleType: "none" }}>
         {MENU_LIST.map((item) => (
           // Menu Item with route link
-          <Link to={item.link}>
+          <Link key={item.id} to={item.link}>
             <li
-              key={item.id}
               style={{
                 fontSize: 14,
                 paddingBottom: 10,
