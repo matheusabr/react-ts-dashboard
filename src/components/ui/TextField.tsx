@@ -26,13 +26,31 @@ const TextField: React.FC<Props> = ({
       style={{
         display: "flex",
         flexDirection: labelVariant === "vertical" ? "column" : "row",
+        marginBottom: 10,
       }}
     >
-      <span style={{ alignSelf: "flex-start" }}>{label}</span>
+      <span
+        style={{
+          flex: 1,
+          alignSelf: "center",
+          paddingRight: 10,
+          fontWeight: "lighter",
+        }}
+      >
+        {label}
+      </span>
       <input
         ref={inputRef}
         type={type}
         placeholder={placeholder}
+        style={{
+          flex: 2,
+          width: "30vw",
+          border: 0,
+          height: 20,
+          borderRadius: 20,
+          padding: 10,
+        }}
         onChange={handleChange}
       />
     </div>
