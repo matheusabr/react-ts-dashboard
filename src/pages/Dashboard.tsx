@@ -17,7 +17,6 @@ const DashboardPage: React.FC = () => {
   const dispatch = useDispatch();
 
   const { spaceNews, player } = useSelector((state: RootState) => state);
-  console.log("player", player);
 
   const [playerName, setPlayerName] = useState("");
   const [editPlayer, setEditPlayer] = useState({});
@@ -29,11 +28,18 @@ const DashboardPage: React.FC = () => {
     dispatch(PlayerActions.getPlayers());
   }, [dispatch]);
 
+  function getPlayers() {
+    // Get players from Firebase
+    dispatch(PlayerActions.getPlayers());
+  }
+
   function handleAdd() {
     // [Firebase] Add data to Db
     dispatch(PlayerActions.addPlayer({ name: playerName }));
     // Reset field
     handleReset();
+    // Update list
+    getPlayers();
   }
 
   function handleEdit(player: Player) {
@@ -48,11 +54,15 @@ const DashboardPage: React.FC = () => {
     console.log("update player", editPlayer);
     // Reset field
     handleReset();
+    // Update list
+    getPlayers();
   }
 
   function handleDelete(docId: string) {
     // [Firebase] Delete data
-    console.log("delete docId", docId);
+    dispatch(PlayerActions.deletePlayer({ docId }));
+    // Update list
+    getPlayers();
   }
 
   function handleReset() {

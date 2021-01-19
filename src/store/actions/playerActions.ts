@@ -12,6 +12,10 @@ interface Action {
   payload?: any;
 }
 
+function getServerTimestamp() {
+  return FirebaseApp.firestore.FieldValue.serverTimestamp();
+}
+
 const PlayerActions = {
   getPlayers: (): ThunkAction<void, RootState, null, Action> => async (
     dispatch
@@ -21,6 +25,7 @@ const PlayerActions = {
       // [FIREBASE] Get 'players' collection
       await FirebaseApp.firestore()
         .collection("players")
+        .orderBy("createdAt", "desc")
         .get()
         .then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
@@ -28,6 +33,7 @@ const PlayerActions = {
             payload.push({
               docId: docData.docId,
               name: docData.name,
+              createdAt: docData.createdAt,
             });
           });
         });
@@ -58,17 +64,31 @@ const PlayerActions = {
         .collection("players")
         .doc(docRef.id)
         .set({
-          docId: docRef.id,
           ...data,
+          docId: docRef.id,
+          createdAt: getServerTimestamp(),
         });
+    } catch (error) {
+      console.error(error);
       // Show alert
       dispatch({
         type: AlertTypes.SET_ALERT,
         payload: {
           type: AlertType.SUCCESS,
-          message: "Player has been added to db!",
+          message: error,
         },
       });
+    }
+  },
+  deletePlayer: (data: {
+    docId: string;
+  }): ThunkAction<void, RootState, null, Action> => async (dispatch) => {
+    try {
+      // [FIREBASE] Remove player from 'players' collection by doc id
+      await FirebaseApp.firestore()
+        .collection("players")
+        .doc(data.docId)
+        .delete();
     } catch (error) {
       console.error(error);
       // Show alert

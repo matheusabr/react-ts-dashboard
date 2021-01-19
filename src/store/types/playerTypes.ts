@@ -9,6 +9,7 @@ export interface Player {
 
 export interface FirebasePlayer extends Player {
   docId: string;
+  createdAt: any;
 }
 
 export default PlayerTypes;

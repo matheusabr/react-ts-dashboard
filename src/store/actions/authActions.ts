@@ -12,6 +12,10 @@ interface Action {
   payload?: any;
 }
 
+function getServerTimestamp() {
+  return FirebaseApp.firestore.FieldValue.serverTimestamp();
+}
+
 const AuthActions = {
   signUp: (data: SignUp): ThunkAction<void, RootState, null, Action> => async (
     dispatch
@@ -27,7 +31,7 @@ const AuthActions = {
           id: user.uid,
           name: data.name,
           email: data.email,
-          createdAt: FirebaseApp.firestore.FieldValue.serverTimestamp(),
+          createdAt: getServerTimestamp(),
         };
         // [FIREBASE] Add user data to 'users' collection
         await FirebaseApp.firestore()
