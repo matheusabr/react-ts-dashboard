@@ -44,6 +44,30 @@ const LoginPage: React.FC = () => {
     }
   }
 
+  function handleSubmitDisabled() {
+    // Validate fields
+    const nameValidation = name && name.length >= 3;
+    const emailValidation =
+      email &&
+      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
+        email
+      );
+    const passwordValidation = password && password.length >= 6;
+
+    // Check all validations combined
+    if (
+      (form === AuthForm.SIGNUP &&
+        nameValidation &&
+        emailValidation &&
+        passwordValidation) ||
+      (form === AuthForm.SIGNIN && emailValidation && passwordValidation)
+    ) {
+      return false;
+    }
+
+    return true;
+  }
+
   return (
     <div
       style={{
@@ -99,6 +123,7 @@ const LoginPage: React.FC = () => {
               label={form === AuthForm.SIGNIN ? "Sign In" : "Create Account"}
               margin="10px 0 0 0"
               backgroundColor={COLORS.primary}
+              disabled={handleSubmitDisabled()}
               onClick={(event) => handleAuth(event)}
             />
           </div>
