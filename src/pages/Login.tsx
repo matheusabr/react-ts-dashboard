@@ -97,7 +97,7 @@ const LoginPage: React.FC = () => {
             />
             <Button
               label={form === AuthForm.SIGNIN ? "Sign In" : "Create Account"}
-              margin={"10px 0 0 0"}
+              margin="10px 0 0 0"
               backgroundColor={COLORS.primary}
               onClick={(event) => handleAuth(event)}
             />

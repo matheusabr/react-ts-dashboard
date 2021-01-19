@@ -40,6 +40,9 @@ const MenuDrawer: React.FC = () => {
   return (
     <div
       style={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
         backgroundColor: COLORS.grey.darker,
         width: 160,
       }}
@@ -63,7 +66,21 @@ const MenuDrawer: React.FC = () => {
         ))}
       </ul>
 
-      <button onClick={() => dispatch(AuthActions.signOut())}>Sign Out</button>
+      <div style={{ textAlign: "center", height: 40 }}>
+        <div style={{ height: 1, backgroundColor: COLORS.grey.dark }} />
+        <span
+          style={{
+            fontSize: 13,
+            padding: "20px 0 0 0",
+            color: COLORS.grey.light,
+            fontWeight: "lighter",
+            cursor: "pointer",
+          }}
+          onClick={() => dispatch(AuthActions.signOut())}
+        >
+          Sign Out
+        </span>
+      </div>
     </div>
   );
 };
