@@ -71,6 +71,10 @@ const DashboardPage: React.FC = () => {
   function handleDelete(docId: string) {
     // [Firebase] Delete data
     dispatch(PlayerActions.deletePlayer({ docId }));
+    if (!!editPlayer.name) {
+      // Reset field
+      handleReset();
+    }
     // Update list
     getPlayers();
   }
@@ -124,7 +128,7 @@ const DashboardPage: React.FC = () => {
             <Button
               label="CANCELAR"
               backgroundColor={COLORS.grey.default}
-              onClick={() => handleReset()}
+              onClick={handleReset}
             />
           )}
         </div>
