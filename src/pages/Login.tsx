@@ -1,10 +1,13 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
+import { RootState } from "../store";
 import AuthActions from "../store/actions/authActions";
 
 import TextField from "../components/ui/TextField";
 import Button from "../components/ui/Button";
+
 import { COLORS } from "../styles/colors";
 
 enum AuthForm {
@@ -13,20 +16,29 @@ enum AuthForm {
 }
 
 const LoginPage: React.FC = () => {
+  const history = useHistory();
   const dispatch = useDispatch();
+  const { authenticated } = useSelector((state: RootState) => state.auth);
 
   const [form, setForm] = useState(AuthForm.SIGNIN);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  useEffect(() => {
+    if (authenticated) {
+      // [ROUTE] Go to dashboard page
+      history.push("/dashboard");
+    }
+  }, [authenticated, history]);
+
   function handleAuth(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     // Prevent page refresh
     e.preventDefault();
-    if (AuthForm.SIGNUP) {
+    if (form === AuthForm.SIGNUP) {
       // Call auth action to sign up
       dispatch(AuthActions.signUp({ name, email, password }));
-    } else if (AuthForm.SIGNIN) {
+    } else if (form === AuthForm.SIGNIN) {
       // Call auth action to sign in
       dispatch(AuthActions.signIn({ email, password }));
     }
