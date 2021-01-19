@@ -1,5 +1,8 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
+
+import AuthActions from "../store/actions/authActions";
 
 import { COLORS } from "../styles/colors";
 
@@ -29,6 +32,8 @@ const MENU_LIST: Array<MenuItem> = [
 ];
 
 const MenuDrawer: React.FC = () => {
+  // Get redux dispatch
+  const dispatch = useDispatch();
   // Get route location
   const locationRoute = useLocation();
 
@@ -39,10 +44,8 @@ const MenuDrawer: React.FC = () => {
         width: 160,
       }}
     >
-      {/* List all menu items */}
       <ul style={{ margin: 0, padding: 10, listStyleType: "none" }}>
         {MENU_LIST.map((item) => (
-          // Menu Item with route link
           <Link key={item.id} to={item.link}>
             <li
               style={{
@@ -59,6 +62,8 @@ const MenuDrawer: React.FC = () => {
           </Link>
         ))}
       </ul>
+
+      <button onClick={() => dispatch(AuthActions.signOut())}>Sign Out</button>
     </div>
   );
 };
