@@ -10,7 +10,7 @@ function SettingsPage() {
   const dispatch = useDispatch();
 
   const { user } = useSelector((state: RootState) => state.auth);
-  console.log("user", user);
+
   return (
     <div>
       <PageHeader title="Settings" />

@@ -101,6 +101,27 @@ const PlayerActions = {
       });
     }
   },
+  updatePlayer: (
+    data: FirebasePlayer
+  ): ThunkAction<void, RootState, null, Action> => async (dispatch) => {
+    try {
+      // [FIREBASE] update player from 'players' collection by doc id
+      await FirebaseApp.firestore()
+        .collection("players")
+        .doc(data.docId)
+        .update(data);
+    } catch (error) {
+      console.error(error);
+      // Show alert
+      dispatch({
+        type: AlertTypes.SET_ALERT,
+        payload: {
+          type: AlertType.SUCCESS,
+          message: error,
+        },
+      });
+    }
+  },
 };
 
 export default PlayerActions;

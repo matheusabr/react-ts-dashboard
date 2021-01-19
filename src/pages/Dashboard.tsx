@@ -9,9 +9,15 @@ import TextField from "../components/ui/TextField";
 import { RootState } from "../store";
 import PlayerActions from "../store/actions/playerActions";
 import SpaceNewsActions from "../store/actions/spaceNewsActions";
-import { FirebasePlayer, Player } from "../store/types/playerTypes";
+import { FirebasePlayer } from "../store/types/playerTypes";
 
 import { COLORS } from "../styles/colors";
+
+const initialPlayerState = {
+  docId: "",
+  name: "",
+  createdAt: null,
+};
 
 const DashboardPage: React.FC = () => {
   const dispatch = useDispatch();
@@ -19,7 +25,7 @@ const DashboardPage: React.FC = () => {
   const { spaceNews, player } = useSelector((state: RootState) => state);
 
   const [playerName, setPlayerName] = useState("");
-  const [editPlayer, setEditPlayer] = useState({});
+  const [editPlayer, setEditPlayer] = useState(initialPlayerState);
 
   useEffect(() => {
     // Get space news from external api
@@ -42,16 +48,20 @@ const DashboardPage: React.FC = () => {
     getPlayers();
   }
 
-  function handleEdit(player: Player) {
-    console.log("edit player", player);
-
+  function handleEdit(player: FirebasePlayer) {
     setEditPlayer(player);
     setPlayerName(player.name);
   }
 
-  function handleUpdate() {
+  function handleUpdate(player: FirebasePlayer) {
     // [Firebase] Update data
-    console.log("update player", editPlayer);
+    dispatch(
+      PlayerActions.updatePlayer({
+        docId: player.docId,
+        name: playerName,
+        createdAt: player.createdAt,
+      })
+    );
     // Reset field
     handleReset();
     // Update list
@@ -67,7 +77,7 @@ const DashboardPage: React.FC = () => {
 
   function handleReset() {
     setPlayerName("");
-    setEditPlayer({});
+    setEditPlayer(initialPlayerState);
   }
 
   return (
@@ -104,13 +114,13 @@ const DashboardPage: React.FC = () => {
             handleChange={(event) => setPlayerName(event.target.value)}
           />
           <Button
-            label={Object.keys(editPlayer).length > 0 ? "UPDATE" : "ADD"}
+            label={!!editPlayer.name ? "UPDATE" : "ADD"}
             backgroundColor={COLORS.primary}
             onClick={() =>
-              Object.keys(editPlayer).length > 0 ? handleUpdate() : handleAdd()
+              !!editPlayer.name ? handleUpdate(editPlayer) : handleAdd()
             }
           />
-          {Object.keys(editPlayer).length > 0 && (
+          {!!editPlayer.name && (
             <Button
               label="CANCELAR"
               backgroundColor={COLORS.grey.default}
