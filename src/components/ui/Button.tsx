@@ -7,25 +7,27 @@ interface Props {
   color?: string;
   backgroundColor?: string;
   disabled?: boolean;
+  small?: boolean;
   onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }
 
 const Button: React.FC<Props> = ({
   label,
   margin = 0,
-  color = "#fcfcfc",
+  color = COLORS.grey.light,
   backgroundColor = COLORS.grey.dark,
   disabled,
+  small = false,
   onClick,
 }) => {
   return (
     <button
       style={{
-        height: 40,
+        height: small ? 30 : 40,
         border: 0,
-        borderRadius: 25,
+        borderRadius: small ? 15 : 20,
         padding: "5px 20px",
-        fontSize: 16,
+        fontSize: small ? 12 : 16,
         fontWeight: "bold",
         margin,
         color,
