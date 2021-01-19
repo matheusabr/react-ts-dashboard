@@ -19,6 +19,12 @@ const AuthReducer = (state = INITIAL_STATE, action: ReducerAction) => {
   switch (action.type) {
     case AuthTypes.RESET_AUTH:
       return INITIAL_STATE;
+    case AuthTypes.SET_USER:
+      return {
+        ...state,
+        user: action.payload,
+        authenticated: true,
+      };
     default:
       return INITIAL_STATE;
   }
