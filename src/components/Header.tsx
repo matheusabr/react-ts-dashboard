@@ -1,8 +1,14 @@
 import React from "react";
 
+import { User } from "../store/types/authTypes";
+
 import { COLORS } from "../styles/colors";
 
-const Header: React.FC = () => {
+interface Props {
+  user: User;
+}
+
+const Header: React.FC<Props> = ({ user }) => {
   return (
     <div
       style={{
@@ -20,10 +26,13 @@ const Header: React.FC = () => {
         style={{
           display: "flex",
           flexDirection: "column",
+          alignItems: "flex-end",
         }}
       >
-        <span style={{ fontSize: 11, fontWeight: "bold" }}>Nome User</span>
-        <span style={{ fontSize: 10, fontWeight: "lighter" }}>User Role</span>
+        <span style={{ fontSize: 11, fontWeight: "bold" }}>{user.name}</span>
+        <span style={{ fontSize: 10, fontWeight: "lighter" }}>
+          {user.email}
+        </span>
       </div>
     </div>
   );

@@ -12,7 +12,7 @@ interface Props extends RouteProps {
 }
 
 const PrivateRoute: React.FC<Props> = ({ component: Component, ...rest }) => {
-  const { authenticated } = useSelector((state: RootState) => state.auth);
+  const { authenticated, user } = useSelector((state: RootState) => state.auth);
 
   if (authenticated) {
     return (
@@ -22,7 +22,7 @@ const PrivateRoute: React.FC<Props> = ({ component: Component, ...rest }) => {
           return (
             <div>
               {/* Main Header */}
-              <Header />
+              <Header user={user} />
               {/* Content */}
               <div
                 style={{
