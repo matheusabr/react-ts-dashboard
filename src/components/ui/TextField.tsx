@@ -5,12 +5,14 @@ type LabelVariant = "inline" | "vertical";
 type InputVariant = "standard" | "filled" | "outline";
 
 interface Props {
-  label: string;
   type: string;
+  label?: string;
   labelColor?: string;
   labelVariant?: LabelVariant;
   placeholder?: string;
   inputVariant?: InputVariant;
+  backgroundColor?: string;
+  value?: string;
   handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -20,6 +22,8 @@ const TextField: React.FC<Props> = ({
   labelVariant = "inline",
   type,
   placeholder,
+  backgroundColor = COLORS.grey.light,
+  value,
   handleChange,
 }) => {
   const inputRef = useRef(null);
@@ -32,17 +36,19 @@ const TextField: React.FC<Props> = ({
         marginBottom: 10,
       }}
     >
-      <span
-        style={{
-          flex: 1,
-          alignSelf: "center",
-          paddingRight: 10,
-          fontWeight: "lighter",
-          color: labelColor,
-        }}
-      >
-        {label}
-      </span>
+      {label && (
+        <span
+          style={{
+            flex: 1,
+            alignSelf: "center",
+            paddingRight: 10,
+            fontWeight: "lighter",
+            color: labelColor,
+          }}
+        >
+          {label}
+        </span>
+      )}
       <input
         ref={inputRef}
         type={type}
@@ -54,7 +60,9 @@ const TextField: React.FC<Props> = ({
           height: 20,
           borderRadius: 20,
           padding: 10,
+          backgroundColor,
         }}
+        value={value}
         onChange={handleChange}
       />
     </div>
