@@ -7,15 +7,15 @@ import FirebaseApp from "../../services/firebase";
 import AuthTypes, { GetUser, SignIn, SignUp } from "../types/authTypes";
 import AlertTypes, { AlertType } from "../types/alertTypes";
 
-interface AuthAction {
+interface Action {
   type: string;
   payload?: any;
 }
 
 const AuthActions = {
-  signUp: (
-    data: SignUp
-  ): ThunkAction<void, RootState, null, AuthAction> => async (dispatch) => {
+  signUp: (data: SignUp): ThunkAction<void, RootState, null, Action> => async (
+    dispatch
+  ) => {
     try {
       // [FIREBASE] Create a new user account
       const { user } = await FirebaseApp.auth().createUserWithEmailAndPassword(
@@ -60,9 +60,9 @@ const AuthActions = {
       });
     }
   },
-  signIn: (
-    data: SignIn
-  ): ThunkAction<void, RootState, null, AuthAction> => async (dispatch) => {
+  signIn: (data: SignIn): ThunkAction<void, RootState, null, Action> => async (
+    dispatch
+  ) => {
     try {
       // [FIREBASE] Sign in to user account
       await FirebaseApp.auth().signInWithEmailAndPassword(
@@ -81,7 +81,7 @@ const AuthActions = {
       });
     }
   },
-  signOut: (): ThunkAction<void, RootState, null, AuthAction> => async (
+  signOut: (): ThunkAction<void, RootState, null, Action> => async (
     dispatch
   ) => {
     try {
@@ -105,7 +105,7 @@ const AuthActions = {
   },
   getUserProfile: (
     data: GetUser
-  ): ThunkAction<void, RootState, null, AuthAction> => async (dispatch) => {
+  ): ThunkAction<void, RootState, null, Action> => async (dispatch) => {
     try {
       let payload = null;
       // [FIREBASE] Get user profile from firestore

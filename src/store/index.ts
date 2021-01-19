@@ -4,11 +4,13 @@ import thunk from "redux-thunk";
 import AlertReducer from "./reducers/alertReducer";
 import AuthReducer from "./reducers/authReducer";
 import SpaceNewsReducer from "./reducers/spaceNewsReducer";
+import PlayerReducer from "./reducers/playerReducer";
 
 const rootReducer = combineReducers({
   alert: AlertReducer,
   auth: AuthReducer,
   spaceNews: SpaceNewsReducer,
+  player: PlayerReducer,
 });
 
 const store = createStore(rootReducer, applyMiddleware(thunk));
