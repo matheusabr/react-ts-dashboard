@@ -1,12 +1,14 @@
 import React, { useRef } from "react";
+import { COLORS } from "../../styles/colors";
 
 type LabelVariant = "inline" | "vertical";
 type InputVariant = "standard" | "filled" | "outline";
 
 interface Props {
   label: string;
-  labelVariant?: LabelVariant;
   type: string;
+  labelColor?: string;
+  labelVariant?: LabelVariant;
   placeholder?: string;
   inputVariant?: InputVariant;
   handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -14,6 +16,7 @@ interface Props {
 
 const TextField: React.FC<Props> = ({
   label,
+  labelColor = COLORS.grey.darker,
   labelVariant = "inline",
   type,
   placeholder,
@@ -35,6 +38,7 @@ const TextField: React.FC<Props> = ({
           alignSelf: "center",
           paddingRight: 10,
           fontWeight: "lighter",
+          color: labelColor,
         }}
       >
         {label}

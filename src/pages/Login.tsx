@@ -7,17 +7,29 @@ import TextField from "../components/ui/TextField";
 import Button from "../components/ui/Button";
 import { COLORS } from "../styles/colors";
 
+enum AuthForm {
+  SIGNIN,
+  SIGNUP,
+}
+
 const LoginPage: React.FC = () => {
   const dispatch = useDispatch();
 
+  const [form, setForm] = useState(AuthForm.SIGNIN);
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  function handleSignIn(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+  function handleAuth(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     // Prevent page refresh
     e.preventDefault();
-    // Call auth action to sign in
-    dispatch(AuthActions.signIn({ email, password }));
+    if (AuthForm.SIGNUP) {
+      // Call auth action to sign up
+      dispatch(AuthActions.signUp({ name, email, password }));
+    } else if (AuthForm.SIGNIN) {
+      // Call auth action to sign in
+      dispatch(AuthActions.signIn({ email, password }));
+    }
   }
 
   return (
@@ -33,8 +45,10 @@ const LoginPage: React.FC = () => {
     >
       <div
         style={{
-          backgroundColor: COLORS.secondary,
+          backgroundColor:
+            form === AuthForm.SIGNUP ? COLORS.grey.dark : COLORS.secondary,
           borderRadius: 20,
+          padding: 60,
         }}
       >
         <form>
@@ -43,30 +57,62 @@ const LoginPage: React.FC = () => {
               display: "flex",
               flex: 1,
               flexDirection: "column",
-              padding: 60,
             }}
           >
+            {form === AuthForm.SIGNUP && (
+              <TextField
+                label="Name"
+                type="text"
+                labelColor={COLORS.secondary}
+                handleChange={(event) => setName(event.target.value)}
+              />
+            )}
             <TextField
               label="E-mail"
               type="text"
+              labelColor={
+                form === AuthForm.SIGNIN ? COLORS.grey.darker : COLORS.secondary
+              }
               handleChange={(event) => setEmail(event.target.value)}
             />
             <TextField
               label="Password"
               type="password"
+              labelColor={
+                form === AuthForm.SIGNIN ? COLORS.grey.darker : COLORS.secondary
+              }
               handleChange={(event) => setPassword(event.target.value)}
             />
             <Button
-              label="Sign In"
+              label={form === AuthForm.SIGNIN ? "Sign In" : "Create Account"}
               margin={"10px 0 0 0"}
               backgroundColor={COLORS.primary}
-              onClick={(event) => handleSignIn(event)}
+              onClick={(event) => handleAuth(event)}
             />
           </div>
         </form>
+        <div style={{ paddingTop: 10, textAlign: "center" }}>
+          <span
+            style={{
+              fontSize: 14,
+              color:
+                form === AuthForm.SIGNIN
+                  ? COLORS.grey.darker
+                  : COLORS.secondary,
+              fontWeight: "lighter",
+              cursor: "pointer",
+            }}
+            onClick={
+              form === AuthForm.SIGNIN
+                ? () => setForm(AuthForm.SIGNUP)
+                : () => setForm(AuthForm.SIGNIN)
+            }
+          >
+            {form === AuthForm.SIGNUP ? "Sign In" : "Create Account"}
+          </span>
+        </div>
       </div>
     </div>
-    // </div>
   );
 };
 
