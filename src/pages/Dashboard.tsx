@@ -5,22 +5,21 @@ import PageHeader from "../components/PageHeader";
 import Button from "../components/ui/Button";
 import ListItem from "../components/ui/ListItem";
 import TextField from "../components/ui/TextField";
-import { RootState } from "../store";
-import SpaceNewsActions from "../store/actions/spaceNewsActions";
-import { COLORS } from "../styles/colors";
 
-interface Player {
-  id: number;
-  name: string;
-}
+import { RootState } from "../store";
+import PlayerActions from "../store/actions/playerActions";
+import SpaceNewsActions from "../store/actions/spaceNewsActions";
+import { Player } from "../store/types/playerTypes";
+
+import { COLORS } from "../styles/colors";
 
 const players = [
   {
-    id: 1,
+    docId: 1,
     name: "aaa",
   },
   {
-    id: 2,
+    docId: 2,
     name: "bbb",
   },
 ];
@@ -39,7 +38,9 @@ const DashboardPage: React.FC = () => {
 
   function handleAdd() {
     // [Firebase] Add data to Db
-    console.log("playerName", playerName);
+    dispatch(PlayerActions.addPlayer({ name: playerName }));
+    // Reset field
+    handleReset();
   }
 
   function handleEdit(player: Player) {
@@ -56,9 +57,9 @@ const DashboardPage: React.FC = () => {
     handleReset();
   }
 
-  function handleDelete(id: number) {
+  function handleDelete(docId: number) {
     // [Firebase] Delete data
-    console.log("delete id", id);
+    console.log("delete docId", docId);
   }
 
   function handleReset() {
@@ -115,9 +116,9 @@ const DashboardPage: React.FC = () => {
           )}
         </div>
         {players &&
-          players.map((item: Player) => (
+          players.map((item) => (
             <div
-              key={item.id}
+              key={item.docId}
               style={{ display: "flex", alignItems: "center" }}
             >
               <ListItem title={item.name} />
@@ -133,7 +134,7 @@ const DashboardPage: React.FC = () => {
                 label="REMOVE"
                 color={COLORS.grey.dark}
                 backgroundColor={COLORS.grey.default}
-                onClick={() => handleDelete(item.id)}
+                onClick={() => handleDelete(item.docId)}
                 small
               />
             </div>

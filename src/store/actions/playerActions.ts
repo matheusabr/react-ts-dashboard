@@ -26,8 +26,7 @@ const PlayerActions = {
           querySnapshot.forEach((doc) => {
             const docData = doc.data();
             payload.push({
-              docId: doc.id,
-              id: docData.id,
+              docId: docData.docId,
               name: docData.name,
             });
           });
@@ -53,8 +52,15 @@ const PlayerActions = {
     data: Player
   ): ThunkAction<void, RootState, null, Action> => async (dispatch) => {
     try {
+      const docRef = await FirebaseApp.firestore().collection("players").doc();
       // [FIREBASE] Add player data to 'players' collection
-      await FirebaseApp.firestore().collection("players").add(data);
+      await FirebaseApp.firestore()
+        .collection("players")
+        .doc(docRef.id)
+        .set({
+          docId: docRef.id,
+          ...data,
+        });
       // Show alert
       dispatch({
         type: AlertTypes.SET_ALERT,

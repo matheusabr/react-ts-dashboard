@@ -36,7 +36,9 @@ const App: React.FC = () => {
   useEffect(() => {
     if (sAlert.show) {
       alert(
-        `${sAlert.type === AlertType.WARNING && "Warning -"} ${sAlert.message}`
+        `${sAlert.type === AlertType.WARNING ? "Warning -" : ""} ${
+          sAlert.message
+        }`
       );
     }
   }, [sAlert]);
