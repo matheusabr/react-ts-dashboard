@@ -9,31 +9,24 @@ import TextField from "../components/ui/TextField";
 import { RootState } from "../store";
 import PlayerActions from "../store/actions/playerActions";
 import SpaceNewsActions from "../store/actions/spaceNewsActions";
-import { Player } from "../store/types/playerTypes";
+import { FirebasePlayer, Player } from "../store/types/playerTypes";
 
 import { COLORS } from "../styles/colors";
-
-const players = [
-  {
-    docId: 1,
-    name: "aaa",
-  },
-  {
-    docId: 2,
-    name: "bbb",
-  },
-];
 
 const DashboardPage: React.FC = () => {
   const dispatch = useDispatch();
 
-  const { spaceNews } = useSelector((state: RootState) => state);
+  const { spaceNews, player } = useSelector((state: RootState) => state);
+  console.log("player", player);
 
   const [playerName, setPlayerName] = useState("");
   const [editPlayer, setEditPlayer] = useState({});
 
   useEffect(() => {
+    // Get space news from external api
     dispatch(SpaceNewsActions.getUserProfile({ limit: 3 }));
+    // Get players from Firebase
+    dispatch(PlayerActions.getPlayers());
   }, [dispatch]);
 
   function handleAdd() {
@@ -57,7 +50,7 @@ const DashboardPage: React.FC = () => {
     handleReset();
   }
 
-  function handleDelete(docId: number) {
+  function handleDelete(docId: string) {
     // [Firebase] Delete data
     console.log("delete docId", docId);
   }
@@ -115,8 +108,8 @@ const DashboardPage: React.FC = () => {
             />
           )}
         </div>
-        {players &&
-          players.map((item) => (
+        {player.players &&
+          player.players.map((item: FirebasePlayer) => (
             <div
               key={item.docId}
               style={{ display: "flex", alignItems: "center" }}
