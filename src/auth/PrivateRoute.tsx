@@ -1,6 +1,8 @@
 import React from "react";
-
+import { useSelector } from "react-redux";
 import { Redirect, Route, RouteProps } from "react-router-dom";
+
+import { RootState } from "../store";
 
 import Header from "../components/Header";
 import MenuDrawer from "../components/MenuDrawer";
@@ -10,9 +12,9 @@ interface Props extends RouteProps {
 }
 
 const PrivateRoute: React.FC<Props> = ({ component: Component, ...rest }) => {
-  const isAuthenticated = true;
+  const { authenticated } = useSelector((state: RootState) => state.auth);
 
-  if (isAuthenticated) {
+  if (authenticated) {
     return (
       <Route
         {...rest}
@@ -25,7 +27,7 @@ const PrivateRoute: React.FC<Props> = ({ component: Component, ...rest }) => {
               <div
                 style={{
                   display: "flex",
-                  height: "100vw",
+                  height: "100vh",
                 }}
               >
                 {/* Sidemenu */}
