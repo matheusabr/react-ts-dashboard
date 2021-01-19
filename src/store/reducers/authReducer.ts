@@ -26,7 +26,7 @@ const AuthReducer = (state = INITIAL_STATE, action: ReducerAction) => {
         authenticated: true,
       };
     default:
-      return INITIAL_STATE;
+      return state;
   }
 };
 

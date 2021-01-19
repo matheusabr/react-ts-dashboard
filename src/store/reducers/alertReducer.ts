@@ -30,7 +30,7 @@ const AlertReducer = (state = INITIAL_STATE, action: ReducerAction) => {
       };
 
     default:
-      return INITIAL_STATE;
+      return state;
   }
 };
 
