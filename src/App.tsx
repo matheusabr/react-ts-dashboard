@@ -14,17 +14,24 @@ import { RootState } from "./store";
 import { AlertState } from "./store/reducers/alertReducer";
 import { AlertType } from "./store/types/alertTypes";
 import AuthActions from "./store/actions/authActions";
+import LoadingActions from "./store/actions/loadingActions";
 
 const App: React.FC = () => {
   const dispatch = useDispatch();
+
   const sAlert: AlertState = useSelector((state: RootState) => state.alert);
+  const sLoading = useSelector((state: RootState) => state.loading);
 
   useEffect(() => {
+    dispatch(LoadingActions.showLoading());
+
     const unsubscribeFirebase = FirebaseApp.auth().onAuthStateChanged(
       (user) => {
         if (user) {
           // Get user profile
           dispatch(AuthActions.getUserProfile({ id: user.uid }));
+        } else {
+          dispatch(LoadingActions.hideLoading());
         }
       }
     );
@@ -42,6 +49,10 @@ const App: React.FC = () => {
       );
     }
   }, [sAlert]);
+
+  if (sLoading.show) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <Router>

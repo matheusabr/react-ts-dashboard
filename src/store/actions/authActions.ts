@@ -6,6 +6,7 @@ import FirebaseApp from "../../services/firebase";
 
 import AuthTypes, { GetUser, SignIn, SignUp } from "../types/authTypes";
 import AlertTypes, { AlertType } from "../types/alertTypes";
+import LoadingTypes from "../types/loadingTypes";
 
 interface Action {
   type: string;
@@ -110,6 +111,10 @@ const AuthActions = {
   getUserProfile: (
     data: GetUser
   ): ThunkAction<void, RootState, null, Action> => async (dispatch) => {
+    // Show loading
+    dispatch({
+      type: LoadingTypes.SHOW_LOADING,
+    });
     try {
       let payload = null;
       // [FIREBASE] Get user profile from firestore
@@ -123,7 +128,15 @@ const AuthActions = {
         type: AuthTypes.SET_USER,
         payload,
       });
+      // Hide loading
+      dispatch({
+        type: LoadingTypes.HIDE_LOADING,
+      });
     } catch (error) {
+      // Hide loading
+      dispatch({
+        type: LoadingTypes.HIDE_LOADING,
+      });
       console.error(error);
       // Show alert
       dispatch({

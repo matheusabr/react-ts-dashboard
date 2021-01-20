@@ -26,7 +26,7 @@ const LoginPage: React.FC = () => {
   const [password, setPassword] = useState("");
 
   useEffect(() => {
-    if (authenticated) {
+    if (authenticated && history.location.pathname === "/login") {
       // [ROUTE] Go to dashboard page
       history.push("/dashboard");
     }
