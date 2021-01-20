@@ -4,23 +4,17 @@ A dashboard project made with React Typescript and uses Firebase Auth and Fireba
 
 ## To Install
 
----
-
 1. Clone this repository
 2. `cd` to project directory
 3. Run `yarn` or `npm install`
 
 ## To Run
 
----
-
 In the project directory, you can run: `yarn start` or `npm start`
 
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 ## Libs
-
----
 
 - react-router-dom: `yarn add react-router-dom @types/react-router-dom`
 - firebase: `yarn add firebase`
@@ -30,8 +24,6 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 - redux-thunk: `yarn add redux-thunk`
 
 ## Author
-
----
 
 Matheus Abreu  
 LinkedIn: https://www.linkedin.com/in/matheusabr/  
